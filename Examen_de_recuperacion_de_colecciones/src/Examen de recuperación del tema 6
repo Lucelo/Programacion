@@ -1,0 +1,71 @@
+Vamos a crear una pequeña aplicación para la gestión de la biblioteca del centro.
+Para ello, necesitamos conocer varios detalles.
+La biblioteca tiene:
+● Nombre
+● Listado de usuarios
+● Listado de elementos prestables. Entre otros, libros.
+De los usuarios necesitamos conocer:
+● Su nombre
+● Si está activo o no
+● La fecha de alta
+● El listado de préstamos del usuario
+De los libros necesitamos conocer:
+● ISBN
+● Título
+● Autores (de 1 a N): Tan sólo se guardará el nombre completo de cada autor
+● Sinopsis
+De los préstamos necesitamos conocer:
+● Elemento que se presta (continúa leyendo)
+● Fecha de inicio del préstamo
+● Fecha máxima de devolución (14 días después de la fecha de inicio)
+● Fecha exacta de la devolución (será nulo hasta que se devuelva)
+Además, el préstamo necesita un método que permita su devolución.
+El usuario necesita un método para realizar un préstamo. Ten en cuenta que un
+usuario no puede realizar dos préstamos al mismo tiempo. Es decir, no puede
+realizar un préstamo si tiene otro que aún no ha devuelto. También debe incluir un
+método de devolución, que acepte la fecha de devolución (para poder incluir datos
+de prueba).
+Crea además una clase llamada Audiovisual. Esta, junto a los libros, serán
+prestables. De esta clase tan sólo necesitamos conocer su título y su formato: DVD o
+BLURAY.
+Los elementos prestables tienen un método prestar, que acepta un usuario, y añade
+el elemento a la lista de préstamos (si el usuario puede pedir un préstamo), sin
+devolver nada.
+
+Supón que hay un número suficiente de libros disponibles, por lo que no hay que
+tener este dato en cuenta.
+
+Necesitamos crear una serie de métodos para la biblioteca:
+
+● Agregar un usuario (puede haber varios usuarios con los mismos datos)
+
+● Agregar un elemento prestable (libro o audiovisual)
+
+● Realizar préstamo, que acepta un usuario, un elemento prestable y una fecha
+de inicio e imprime por pantalla la fecha máxima de devolución
+
+● Contar el número de préstamos desde una fecha determinada
+
+● Mostrar el número de libros que tienen más de un autor
+
+● Número de préstamos con fecha de inicio en los últimos 90 días que se
+pasaron de la fecha de devolución.
+
+● ** Mostrar el autor/los autores que más veces han sido prestados.
+Ten en cuenta que:
+
+● Por motivos ilustrativos, el constructor del préstamo aceptará por parámetro
+la fecha de inicio (para poder hacer pruebas), y calculará la de fin.
+● Por el mismo motivo, el método devolver de la clase préstamo deberá
+aceptar la fecha de devolución, que no podrá ser anterior a la fecha de inicio.
+● Utiliza la clase gestion_de_la_biblioteca.Principal que se adjunta. No se permiten cambios en esta
+clase.
+● Para este caso concreto, puedes imprimir por pantalla desde la clase
+gestion_de_la_biblioteca.Biblioteca.
+Penalizaciones (para el examen general):
+● La copia del código de un compañero conlleva automáticamente un 0 en la
+calificación para todos los implicados.
+● El uso de sistemas de generación automática de código también implica una
+calificación de 0.
+● Si el programa ni siquiera se puede ejecutar, tiene una penalización de 5
+puntos.

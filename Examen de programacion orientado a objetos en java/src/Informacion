@@ -1,0 +1,103 @@
+Se desea desarrollar una aplicación para gestionar distintos tipos de instrumentos
+musicales. A nivel general, de cada instrumento musical necesitamos conocer:
+1. Nombre
+2. Material (valores posibles: Madera, Metal, Plástico, Otro)
+3. Familia (valores posibles: Cuerda, Viento, Percusión)
+4. Afinado (un indicador para saber si está afinado o no)
+Además, todos los instrumentos son afinables y por tanto deben poder ser afinados, lo cual
+hace que el instrumento pase a estar “afinado”.
+Se espera que todos los instrumentos musicales puedan tener la capacidad de tocarse. Por
+ello, todos los instrumentos deben tener:
+
+1. Una forma de tocar el instrumento que simplemente muestre un mensaje.
+
+2. Un indicador para comprobar si el instrumento necesita ser afinado o no.
+Además, hay ciertos instrumentos (por ejemplo, algunos de cuerda eléctrica) que son
+amplificables. Dichos instrumentos deben poder:
+
+1. Conectarse a un amplificador (símplemente mostrando un mensaje que indique que
+el instrumento se ha conectado)
+
+2. Ajustar el volumen, permitiendo modificar el volumen y notificar dicho cambio, de
+nuevo, simulado: “Se ha cambiado el volúmen a X”
+Algunos instrumentos son particularmente portátiles. Para esos casos, se necesita conocer
+la facilidad de transporte, basándose en su peso. Si dicho peso es menor o igual a 3 kg, se
+considerará que el instrumento es fácil de transportar.
+Dentro del dominio de instrumentos musicales, se contemplan los siguientes ejemplos:
+
+1. GuitarraAcústica
+○ Pertenece a la familia Cuerda.
+○ Posee la capacidad de ser tocada y es portátil.
+○ Dispone de un atributo adicional para el peso.
+
+2. GuitarraEléctrica
+○ También de la familia Cuerda.
+○ Se puede tocar, es portátil y además amplificable.
+○ Incluye un atributo peso.
+
+3. Piano
+○ Pertenece a la familia Cuerda.
+○ Solo posee la capacidad de ser tocado.
+○ No se considera portátil ni amplificable.
+
+4. Flauta
+○ Pertenece a la familia Viento.
+○ Tiene la capacidad de tocarse y también se clasifica como portátil.
+○ Maneja un atributo adicional peso.
+
+5. Batería
+○ Pertenece a la familia Percusión.
+○ Dispone únicamente de la capacidad de ser tocada.
+○ No se considera portátil ni amplificable.
+
+Crea una clase principal donde crees los objetos que se detallan a continuación y haz lo
+siguiente:
+
+● Para todos los instrumentos, comprueba si el instrumento en cuestión necesita
+afinarse. Si es así, afínalo. A continuación, toca el instrumento (aunque ya estuviese
+afinado).
+
+● Para todos los instrumentos que sean portátiles, escribe por pantalla si el
+instrumento (acompañado de su nombre) es fácil o no de transportar.
+
+● Para todos aquellos instrumentos que sean amplificables, conéctalos al amplificador
+y ajústales el volumen a 10.
+
+● Se espera que todo lo anterior se realice utilizando herencia, interfaces y
+polimorfismo. Todas las soluciones que no utilicen esto, serán marcadas como
+incorrectas.
+
+Aquí tienes los objetos que debes crear:
+
+1. Guitarra acústica
+○ Nombre: Guitarra española
+○ Material: Madera
+○ Familia: Cuerda
+○ Peso: 2.5 kg
+○ Afinado: No
+
+2. Guitarra eléctrica
+○ Nombre: Fender Stratocaster
+○ Material: Metal
+○ Familia: Cuerda
+○ Peso: 3.5 kg
+○ Afinado: Sí
+
+3. Piano
+○ Nombre: Yamaha Clavinova
+○ Material: Madera
+○ Familia: Cuerda
+○ Afinado: No
+
+4. Flauta
+○ Nombre: Flauta dulce
+○ Material: Plástico
+○ Familia: Viento
+○ Peso: 0.5 kg
+○ Afinado: Sí
+
+5. Batería
+○ Nombre: Batería acústica
+○ Material: Metal
+○ Familia: Percusión
+○ Afinado: No

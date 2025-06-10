@@ -1,0 +1,211 @@
+Ejercicio 3
+
+Se desea desarrollar una aplicación que permita enviar mensajes entre los profesores y
+los alumnos de un centro de enseñanza.
+
+Se proporcionan la clase abstracta Persona, así como Profesor y Alumno. Se debe
+incluir las opciones para que las personas puedan enviarse mensajes. De cada mensaje
+se guardará el remitente, el texto del mensaje y la fecha y hora en la que se envió.
+
+Todas las personas deben tener:
+
+● Un método para poder enviar un mensaje a otra persona. Recibirá como
+parámetro la persona destinataria y el texto del mensaje.
+
+◦ Si la persona que envía el mensaje es un alumno y es menor de edad sólo
+puede enviar mensajes a profesores, es decir, si un alumno menor de edad
+intenta enviar un mensaje a otro alumno se debe provocar un error.
+
+● Un método para poder leer los mensajes del buzón. Este método devolverá un
+String con todos los mensajes que tiene. Si no tiene mensajes para leer saltará el
+correspondiente mensaje de error. Cada mensaje irá precedido de un número 1
+en adelante, es decir se mostrará con este formato.
+“Mensaje X: De: nombreRemitente Texto: textoMensaje
+ Fecha y hora: DD-MM-AAAA HH:MM”
+
+● Un método para poder leer los mensajes del buzón pero ordenado por el nombre
+del remitente alfabéticamente.
+
+● Un método para poder borrar un mensaje del buzón. Al método se le pasará el
+número de mensaje que se desea borrar. Si no existe ese número de mensaje
+saltará una excepción.
+
+● Un método que realice una búsqueda para poder encontrar los mensajes de su
+buzón que contienen una frase Este método devolverá un String con todos los
+mensajes que tienen esa frase o saltará la excepción si no encuentra ningún
+mensaje con esa frase.
+
+Probar estos métodos desde el main.
+
+
+
+
+
+
+
+
+
+
+
+/*
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+// Clase Mensaje
+class Mensaje {
+    private String remitente;
+    private String texto;
+    private LocalDateTime fechaHora;
+
+    public Mensaje(String remitente, String texto) {
+        this.remitente = remitente;
+        this.texto = texto;
+        this.fechaHora = LocalDateTime.now();
+    }
+
+    public String getRemitente() {
+        return remitente;
+    }
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public String getFechaHora() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return fechaHora.format(formatter);
+    }
+
+    @Override
+    public String toString() {
+        return "De: " + remitente + " Texto: " + texto + "\nFecha y hora: " + getFechaHora();
+    }
+}
+
+// Clase abstracta Persona
+abstract class Persona {
+    protected String nombre;
+    protected int edad;
+    protected List<Mensaje> buzon;
+
+    public Persona(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.buzon = new ArrayList<>();
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void enviarMensaje(Persona destinatario, String texto) throws Exception {
+        if (this instanceof Alumno && this.edad < 18 && destinatario instanceof Alumno) {
+            throw new Exception("Los alumnos menores de edad solo pueden enviar mensajes a profesores.");
+        }
+        destinatario.buzon.add(new Mensaje(this.nombre, texto));
+    }
+
+    public String leerMensajes() throws Exception {
+        if (buzon.isEmpty()) {
+            throw new Exception("No hay mensajes en el buzón.");
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < buzon.size(); i++) {
+            sb.append("Mensaje ").append(i + 1).append(": ").append(buzon.get(i)).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public String leerMensajesOrdenados() throws Exception {
+        if (buzon.isEmpty()) {
+            throw new Exception("No hay mensajes en el buzón.");
+        }
+        List<Mensaje> ordenados = new ArrayList<>(buzon);
+        ordenados.sort(Comparator.comparing(Mensaje::getRemitente));
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < ordenados.size(); i++) {
+            sb.append("Mensaje ").append(i + 1).append(": ").append(ordenados.get(i)).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public void borrarMensaje(int numero) throws Exception {
+        if (numero < 1 || numero > buzon.size()) {
+            throw new Exception("Número de mensaje inválido.");
+        }
+        buzon.remove(numero - 1);
+    }
+
+    public String buscarMensajes(String frase) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        for (Mensaje mensaje : buzon) {
+            if (mensaje.getTexto().contains(frase)) {
+                sb.append(mensaje).append("\n");
+            }
+        }
+        if (sb.isEmpty()) {
+            throw new Exception("No se encontraron mensajes con la frase: " + frase);
+        }
+        return sb.toString();
+    }
+}
+
+// Clase Profesor
+class Profesor extends Persona {
+    public Profesor(String nombre, int edad) {
+        super(nombre, edad);
+    }
+}
+
+// Clase Alumno
+class Alumno extends Persona {
+    public Alumno(String nombre, int edad) {
+        super(nombre, edad);
+    }
+}
+
+// Clase Main para pruebas
+public class Main {
+    public static void main(String[] args) {
+        try {
+            Profesor profesor1 = new Profesor("Carlos", 40);
+            Alumno alumno1 = new Alumno("Ana", 17);
+            Alumno alumno2 = new Alumno("Luis", 18);
+
+            // Enviar mensajes válidos
+            alumno1.enviarMensaje(profesor1, "Hola profesor, tengo dudas sobre la tarea.");
+            profesor1.enviarMensaje(alumno1, "Claro Ana, dime en qué necesitas ayuda.");
+            alumno2.enviarMensaje(alumno1, "Ana, ¿quieres estudiar juntos?");
+
+            // Intentar enviar mensaje inválido
+            try {
+                alumno1.enviarMensaje(alumno2, "Hola Luis, ¿cómo estás?");
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+
+            // Leer mensajes
+            System.out.println("\nMensajes de Ana:");
+            System.out.println(alumno1.leerMensajes());
+
+            // Leer mensajes ordenados
+            System.out.println("\nMensajes de Ana ordenados:");
+            System.out.println(alumno1.leerMensajesOrdenados());
+
+            // Buscar mensajes con una palabra clave
+            System.out.println("\nBuscando 'tarea' en mensajes de Carlos:");
+            System.out.println(profesor1.buscarMensajes("tarea"));
+
+            // Borrar un mensaje y volver a leer
+            alumno1.borrarMensaje(1);
+            System.out.println("\nMensajes de Ana después de borrar el primero:");
+            System.out.println(alumno1.leerMensajes());
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+*/

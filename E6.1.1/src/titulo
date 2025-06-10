@@ -1,0 +1,39 @@
+Ejercicio1
+
+Escribir un programa para gestionar conjuntos de alumnos apuntados a equipos
+deportivos. El programa dispondrá de:
+
+• La Clase Equipos_deportivo.Alumno, con los atributos: nombre y DNI de tipo String. Implementar el
+método constructor y los métodos toString() y equals,
+
+• La Clase Equipos_deportivo.Equipo. Cada equipo deportivo se representa en una clase que contiene el
+nombre del equipo y un conjunto de alumnos.
+
+El equipo tiene operaciones para:
+
+● Añadir un alumno (recibe como parámetro el objeto alumno a insertar). Si el
+alumno ya existe en el equipo debe saltar una excepción.
+
+● Borrar un alumno (recibe como parámetro el objeto alumno a borrar). Si el
+alumno no existe en el equipo debe saltar una excepción.
+
+● Saber si un alumno pertenece al equipo. Recibe como parámetro el objeto
+alumno a buscar y devuelve null si no lo encuentra y el objeto alumno si existe.
+
+● Mostrar en pantalla la lista de personas del equipo.
+
+● Unión de equipos. El método lo llamará un equipo y se le pasará por parámetro
+el otro equipo con el que se quiere unir. Devuelve un equipo formado por los
+alumnos de ambos equipos.
+
+● Intersección de equipos. Idem al anterior pero devuelve un equipo formado por
+los alumnos que están en los dos equipos
+
+Se pide:
+1. Decidir la estructura de almacenamiento más indicada para este ejercicio. No
+debe establecerse ningún límite de jugadores en los equipos.
+
+2. Realizar las clases Equipos_deportivo.Alumno, Equipos_deportivo.Equipo así como un programa de prueba que cree
+varios equipos y prueba todas las operaciones mostrando en pantalla los
+resultados.
+

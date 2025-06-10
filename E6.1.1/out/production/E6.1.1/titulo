@@ -1,0 +1,189 @@
+Ejercicio1
+
+Escribir un programa para gestionar conjuntos de alumnos apuntados a equipos
+deportivos. El programa dispondrá de:
+
+• La Clase Equipos_deportivo.Alumno, con los atributos: nombre y DNI de tipo String. Implementar el
+método constructor y los métodos toString() y equals,
+
+• La Clase Equipos_deportivo.Equipo. Cada equipo deportivo se representa en una clase que contiene el
+nombre del equipo y un conjunto de alumnos.
+
+El equipo tiene operaciones para:
+
+● Añadir un alumno (recibe como parámetro el objeto alumno a insertar). Si el
+alumno ya existe en el equipo debe saltar una excepción.
+
+● Borrar un alumno (recibe como parámetro el objeto alumno a borrar). Si el
+alumno no existe en el equipo debe saltar una excepción.
+
+● Saber si un alumno pertenece al equipo. Recibe como parámetro el objeto
+alumno a buscar y devuelve null si no lo encuentra y el objeto alumno si existe.
+
+● Mostrar en pantalla la lista de personas del equipo.
+
+● Unión de equipos. El método lo llamará un equipo y se le pasará por parámetro
+el otro equipo con el que se quiere unir. Devuelve un equipo formado por los
+alumnos de ambos equipos.
+
+● Intersección de equipos. Idem al anterior pero devuelve un equipo formado por
+los alumnos que están en los dos equipos
+
+Se pide:
+1. Decidir la estructura de almacenamiento más indicada para este ejercicio. No
+debe establecerse ningún límite de jugadores en los equipos.
+
+2. Realizar las clases Equipos_deportivo.Alumno, Equipos_deportivo.Equipo así como un programa de prueba que cree
+varios equipos y prueba todas las operaciones mostrando en pantalla los
+resultados.
+
+
+
+
+
+
+import java.util.HashSet;
+import java.util.Set;
+
+// Clase Equipos_deportivo.Alumno
+class Equipos_deportivo.Alumno {
+    private String nombre;
+    private String dni;
+
+    public Equipos_deportivo.Alumno(String nombre, String dni) {
+        this.nombre = nombre;
+        this.dni = dni;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    @Override
+    public String toString() {
+        return "Equipos_deportivo.Alumno: " + nombre + " (DNI: " + dni + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Equipos_deportivo.Alumno alumno = (Equipos_deportivo.Alumno) obj;
+        return dni.equals(alumno.dni);
+    }
+
+    @Override
+    public int hashCode() {
+        return dni.hashCode();
+    }
+}
+
+// Excepción personalizada para gestión de alumnos en equipos
+class EquipoException extends Exception {
+    public EquipoException(String mensaje) {
+        super(mensaje);
+    }
+}
+
+// Clase Equipos_deportivo.Equipo
+class Equipos_deportivo.Equipo {
+    private String nombre;
+        private Set<Equipos_deportivo.Alumno> alumnos;
+
+        public Equipos_deportivo.Equipo(String nombre) {
+            this.nombre = nombre;
+            this.alumnos = new HashSet<>();
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void agregarAlumno(Equipos_deportivo.Alumno alumno) throws EquipoException {
+            if (!alumnos.add(alumno)) {
+                throw new EquipoException("El alumno " + alumno.getNombre() + " ya está en el equipo " + nombre);
+            }
+        }
+
+        public void borrarAlumno(Equipos_deportivo.Alumno alumno) throws EquipoException {
+            if (!alumnos.remove(alumno)) {
+                throw new EquipoException("El alumno " + alumno.getNombre() + " no está en el equipo " + nombre);
+            }
+        }
+
+        public Equipos_deportivo.Alumno buscarAlumno(Equipos_deportivo.Alumno alumno) {
+            for (Equipos_deportivo.Alumno a : alumnos) {
+                if (a.equals(alumno)) {
+                    return a;
+                }
+            }
+            return null;
+        }
+
+        public void mostrarEquipo() {
+            System.out.println("Equipos_deportivo.Equipo: " + nombre);
+            for (Equipos_deportivo.Alumno a : alumnos) {
+                System.out.println(a);
+            }
+        }
+
+        public Equipos_deportivo.Equipo unionEquipos(Equipos_deportivo.Equipo otroEquipo) {
+            Equipos_deportivo.Equipo nuevoEquipo = new Equipos_deportivo.Equipo(this.nombre + " + " + otroEquipo.getNombre());
+            nuevoEquipo.alumnos.addAll(this.alumnos);
+            nuevoEquipo.alumnos.addAll(otroEquipo.alumnos);
+            return nuevoEquipo;
+        }
+
+        public Equipos_deportivo.Equipo interseccionEquipos(Equipos_deportivo.Equipo otroEquipo) {
+            Equipos_deportivo.Equipo nuevoEquipo = new Equipos_deportivo.Equipo(this.nombre + " ∩ " + otroEquipo.getNombre());
+            for (Equipos_deportivo.Alumno a : this.alumnos) {
+                if (otroEquipo.alumnos.contains(a)) {
+                    nuevoEquipo.alumnos.add(a);
+                }
+            }
+            return nuevoEquipo;
+        }
+}
+
+// Clase principal para probar el código
+public class Equipos_deportivo.Main {
+    public static void main(String[] args) {
+        try {
+            Equipos_deportivo.Alumno a1 = new Equipos_deportivo.Alumno("Juan", "123A");
+            Equipos_deportivo.Alumno a2 = new Equipos_deportivo.Alumno("Pedro", "456B");
+            Equipos_deportivo.Alumno a3 = new Equipos_deportivo.Alumno("Maria", "789C");
+            Equipos_deportivo.Alumno a4 = new Equipos_deportivo.Alumno("Luis", "101D");
+            Equipos_deportivo.Alumno a5 = new Equipos_deportivo.Alumno("Ana", "202E");
+
+            Equipos_deportivo.Equipo equipo1 = new Equipos_deportivo.Equipo("Fútbol");
+            Equipos_deportivo.Equipo equipo2 = new Equipos_deportivo.Equipo("Baloncesto");
+
+            equipo1.agregarAlumno(a1);
+            equipo1.agregarAlumno(a2);
+            equipo1.agregarAlumno(a3);
+
+            equipo2.agregarAlumno(a3);
+            equipo2.agregarAlumno(a4);
+            equipo2.agregarAlumno(a5);
+
+            System.out.println("\n--- Equipos iniciales ---");
+            equipo1.mostrarEquipo();
+            equipo2.mostrarEquipo();
+
+            System.out.println("\n--- Unión de equipos ---");
+            Equipos_deportivo.Equipo equipoUnion = equipo1.unionEquipos(equipo2);
+            equipoUnion.mostrarEquipo();
+
+            System.out.println("\n--- Intersección de equipos ---");
+            Equipos_deportivo.Equipo equipoInterseccion = equipo1.interseccionEquipos(equipo2);
+            equipoInterseccion.mostrarEquipo();
+
+        } catch (EquipoException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}

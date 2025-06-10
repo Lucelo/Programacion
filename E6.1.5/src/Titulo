@@ -1,0 +1,17 @@
+Ejercicio 5
+Realizar una clase que implemente un diccionario. Cada palabra puede tener varios
+significados. Se presentará un menú de esta forma
+
+1. Añadir palabra. Se solicitará a palabra y su significado. Si la palabra ya tenía un
+significado se guardará este nuevo significado con los anteriores
+
+2. Buscar palabra en diccionario: Se solicitará la palabra y se mostrarán todos sus
+significados
+
+3. Borrar una palabra del diccionario: Se solicitará la palabra y se borrará, con
+todos sus significados.
+
+4. Listado de palabras que empiecen por … Se solicitará una cadena y se mostrará
+un listado de palabras ordenado alfabéticamente que comiencen por esa cadena.
+
+5. Salir
