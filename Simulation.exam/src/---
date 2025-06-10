@@ -1,0 +1,69 @@
+package empleados_de_la_empresa;
+
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+import java.util.regex.*;
+
+public class Empleados {
+
+    private static final File DIRECTORIO = new File("datos_empleados");
+    private static final Pattern PATRON_VALIDO = Pattern.compile("^empleado_(\\d{3})\\.(txt|data)$");
+    private static final Pattern PATRON_CONFIDENCIAL = Pattern.compile("\\bCONFIDENCIAL\\b", Pattern.CASE_INSENSITIVE);
+
+    public static void procesarEmpleados() {
+        List<File> archivosValidos = new ArrayList<>();
+
+        // Recorrer recursivamente el directorio
+        buscarArchivosValidos(DIRECTORIO, archivosValidos);
+
+        // Ordenar por número de empleado (empleado_001.txt → 1)
+        archivosValidos.sort(Comparator.comparingInt(Empleados::extraerNumeroEmpleado));
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("empleados_unificado.txt"))) {
+            for (File archivo : archivosValidos) {
+                List<String> lineas = Files.readAllLines(archivo.toPath());
+
+                boolean esConfidencial = lineas.stream()
+                        .anyMatch(linea -> PATRON_CONFIDENCIAL.matcher(linea).find());
+
+                if (!esConfidencial) {
+                    for (String linea : lineas) {
+                        if (linea.startsWith("Nombre: ") || linea.startsWith("Departamento: ") || linea.startsWith("Edad: ")) {
+                            writer.write(linea);
+                            writer.newLine();
+                        }
+                    }
+                    writer.newLine(); // separador entre empleados
+                }
+            }
+            System.out.println("Archivo empleados_unificado.txt generado correctamente.");
+        } catch (IOException e) {
+            System.err.println("Error al escribir el archivo: " + e.getMessage());
+        }
+    }
+
+    private static void buscarArchivosValidos(File carpeta, List<File> lista) {
+        File[] archivos = carpeta.listFiles();
+        if (archivos != null) {
+            for (File archivo : archivos) {
+                if (archivo.isDirectory()) {
+                    buscarArchivosValidos(archivo, lista);
+                } else {
+                    Matcher matcher = PATRON_VALIDO.matcher(archivo.getName());
+                    if (matcher.matches()) {
+                        lista.add(archivo);
+                    }
+                }
+            }
+        }
+    }
+
+    private static int extraerNumeroEmpleado(File archivo) {
+        Matcher matcher = PATRON_VALIDO.matcher(archivo.getName());
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group(1));
+        }
+        return Integer.MAX_VALUE; // por si falla, que se vaya al final
+    }
+}

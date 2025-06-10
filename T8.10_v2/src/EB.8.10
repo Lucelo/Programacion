@@ -1,0 +1,36 @@
+10. Crea un programa, con un menú de opciones, que:
+
+1. Pregunte al usuario los datos necesarios para insertar un nuevo producto en
+la base de datos.
+
+2. Permita realizar un pedido para un cliente. Para ello:
+
+i. Se preguntará qué número de cliente es el que hace la compra. Se
+validará este número hasta que sea correcto. Una vez seleccionado,
+se mostrará un mensaje del tipo: “Se ha seleccionado el cliente
+Manolito Bandúrriez”.
+
+ii. Se preguntará de qué categoría se quiere seleccionar el producto. Se
+mostrarán todas las categorías disponibles y se esperará que el
+usuario escriba el nombre de una.
+
+iii. Una vez seleccionada una categoría correcta se mostrarán todos los
+productos correspondientes a dicha categoría, junto al precio de
+venta, y se solicitará al usuario que introduzca el identificador del
+producto. Se pedirá hasta que el usuario introduzca uno correcto.
+
+iv. Se solicitará a continuación cuántas unidades de dicho producto se
+desea comprar. Se tendrá en cuenta el stock de los productos y el
+número de unidades del mismo producto que ya pueda haber en el
+carrito.
+
+v. Se preguntará si quiere añadir algún producto más. Si responde que sí,
+se volverá al punto ii.
+
+vi. Una vez que el usuario responda que no quiere añadir más
+productos, se calculará el total, se mostrará por pantalla un resumen
+del pedido y se guardarán los datos en las tablas necesarias.
+
+vii. Si se produce algún fallo en algún punto intermedio del programa, no
+se dejarán pedidos a medias. Es decir, los datos introducidos que no
+estén finalizados no deben escribirse. Consejo: usa transacciones.
